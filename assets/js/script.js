@@ -44,9 +44,9 @@ for (let i = 0; i < timeSchedule.length; i++) {
     timeSchedule[i].removeClass("past present future");
 
     if (timeblockElHour > timeSchedule[i].data("hour")) {
-        timeSchedule.addClass("past");
+        timeSchedule[i].addClass("past");
     } else if (
-        timeblockElHour === timeSchedule[i].attr(data-hour)) {
+        timeblockElHour === timeSchedule[i].attr("data-hour")) {
             timeSchedule[i].addClass("present");
         } else {
             timeSchedule[i].addClass("future");
@@ -73,4 +73,4 @@ function formClick(event) {
     localStorage.setItem("time block" +  targetTimeBlock, targetText.val());
 }
 
-saveBttn.on("click", handleFormSubmit);
+saveButton.on("click", formClick);
