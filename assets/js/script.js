@@ -28,7 +28,7 @@ let timeSchedule = [
     time9am,
     time10am,
     time11am,
-    time12am,
+    time12pm,
     time1pm,
     time2pm,
     time3pm,
@@ -37,3 +37,40 @@ let timeSchedule = [
 ];
 
 // Colour code for timeblocks: past, present, and future
+// Hour format kk
+let timeblockElHour = moment().format("kk");
+// For-loop
+for (let i = 0; i < timeSchedule.length; i++) {
+    timeSchedule[i].removeClass("past present future");
+
+    if (timeblockElHour > timeSchedule[i].data("hour")) {
+        timeSchedule.addClass("past");
+    } else if (
+        timeblockElHour === timeSchedule[i].attr(data-hour)) {
+            timeSchedule[i].addClass("present");
+        } else {
+            timeSchedule[i].addClass("future");
+        }
+}
+
+// save to local storage
+function localSave() {
+    for (let el of timeblockElHour) {
+        el.val(localStorage.getItem("time block" + el.data("hour")));
+    }
+}
+
+// function for handling clicks
+function formClick(event) {
+    event.preventDefault();
+
+    let btnClick = $(event.currentTarget);
+
+    let targetText = btnClick.siblings("textarea");
+ 
+    let targetTimeBlock = targetText.data("hour");
+
+    localStorage.setItem("time block" +  targetTimeBlock, targetText.val());
+}
+
+saveBttn.on("click", handleFormSubmit);
